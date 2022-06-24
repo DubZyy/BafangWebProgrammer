@@ -66,6 +66,8 @@ window.onload = () => {
                     bafang.onSerialConnect(false);
                 }
     */
+
+    /*
     const sections = ["basic", "pedal", "throttle"];
     for (let s of sections) {
         let t = document.querySelector("table#" + s);
@@ -90,6 +92,7 @@ window.onload = () => {
             }
         }
     }
+    */
 
     const a = document.querySelectorAll("select#designated_assist");
     for (let sel of a) {
