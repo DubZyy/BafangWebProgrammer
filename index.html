@@ -15,10 +15,11 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- MDB -->
     <link rel="stylesheet" href="css/mdb.min.css" />
+
 </head>
 
 <body>
-    <div class="container">
+    <main class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-bottom: 1em;">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="home-tab" data-mdb-toggle="tab" href="#home-tab-pane" type="button"
@@ -34,504 +35,550 @@
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="throttle-tab" data-mdb-toggle="tab" data-bs-target="#throttle-tab-pane"
-                    type="button" role="tab" aria-controls="throttle-tab-pane" aria-selected="false">Throttle
-                    Handle</a>
+                    type="button" role="tab" aria-controls="throttle-tab-pane" aria-selected="false">Throttle Handle</a>
             </li>
         </ul>
-
         <div class="tab-content" id="myTabContent">
 
             <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                 tabindex="0">
-                
+
+                <div>
+                    <button id="connect-to-serial" class="btn">Open serial port</button>
+                    <button id="disconnect-serial" class="btn">Close serial port</button>
+                    <span id="port-status"></span>
+                </div>
+                <hr class="divider-horizontal" />
+                <div id="saveload">
                     <div>
-                        <button id="connect-to-serial" class="btn">Open serial port</button>
-                        <button id="disconnect-serial" class="btn">Close serial port</button>
-                        <span id="port-status"></span>
+                        <label class="form-label" for="file-pick">Load controller config file:</label>
+                        <input type="file" class="form-control" id="file-pick" accept=".json,.el" />
                     </div>
-                    <div id="saveload">
-                        <div>
-                            <label>Load File:
-                                <input type="file" id="file-pick" accept=".json,.el" />
-                            </label>
-                        </div>
-                        <div>
-                            <label>Save File:
-                                <button id="save-file" type="button">Download</button>
-                            </label>
-                        </div>
+                    <hr class="divider-horizontal" />
+                    <div>
+                        <label class="form-label" for="save-file">Save File:</label>
+                        <button id="save-file" type="button" class="btn">Download Controller</button>
+
                     </div>
+                </div>
 
-                    <span class="error-display" id="info"></span>
+                <span class="error-display" id="info"></span>
+                <hr class="divider-horizontal" />
+                <button id="read-all" class="btn" type="button" disabled=1>Read All</button>
+                <button id="write-all" class="btn" type="button" disabled=1>Write All</button>
+                <hr class="divider-horizontal" />
+                <h2>Info</h2>
+                <!--<button id="read-gen" type="button" disabled=1>Connect controller</button>-->
+                <table id="info" class="table">
+                    <tbody>
+                        <tr>
+                            <th style="width:12em">Manufacturer</th>
+                            <td id="manufacturer"></td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td id="model"></td>
+                        </tr>
+                        <tr>
+                            <th>HW Version</th>
+                            <td id="hw_ver"></td>
+                        </tr>
+                        <tr>
+                            <th>FW Version</th>
+                            <td id="fw_ver"></td>
+                        </tr>
+                        <tr>
+                            <th>Voltage</th>
+                            <td id="voltage"></td>
+                        </tr>
+                        <tr>
+                            <th>Max Current (A)</th>
+                            <td id="max_current"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                    <button id="read-all" class="btn" type="button" disabled=1>Read All</button>
-                    <button id="write-all" class="btn" type="button" disabled=1>Write All</button>
-
-                    <h2>Info</h2>
-                    <!--<button id="read-gen" type="button" disabled=1>Connect controller</button>-->
-                    <table id="info" class="table">
-                        <tbody>
-                            <tr>
-                                <th>Manufacturer</th>
-                                <td id="manufacturer"></td>
-                            </tr>
-                            <tr>
-                                <th>Model</th>
-                                <td id="model"></td>
-                            </tr>
-                            <tr>
-                                <th>HW Version</th>
-                                <td id="hw_ver"></td>
-                            </tr>
-                            <tr>
-                                <th>FW Version</th>
-                                <td id="fw_ver"></td>
-                            </tr>
-                            <tr>
-                                <th>Voltage</th>
-                                <td id="voltage"></td>
-                            </tr>
-                            <tr>
-                                <th>Max Current (A)</th>
-                                <td id="max_current"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-            
             </div>
             <div class="tab-pane fade" id="basic-tab-pane" role="tabpanel" aria-labelledby="basic-tab" tabindex="0">
-                <div class="container">
-                    <div class="d-flex flex-column">
-                        <div class="d-flex justify-content-start">
-                            <h2>Basic</h2>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button id="read-bas" class="btn" type="button" disabled=1>Read</button>
-                            <button id="write-bas" class="btn" type="button" disabled=1>Write</button>
-                        </div>
+
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-start">
+                        <h2>Basic</h2>
                     </div>
-    
-                    
-                    <!--<span class="error-display" id="basic"></span>-->
-
-                    <table id="basic" class="table table-sm table-hover">
-                        <tbody>
-                            <tr>
-                                <th style="width:100px;">Low Battery Protect (V)</th>
-                                <td>
-                                    <input type="number" id="low_battery_protect" class="form-control" min="18" max="70" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Current Limit (A)</th>
-                                <td>
-                                    <div class="form-outline">
-                                        <input type="number" id="current_limit" class="form-control" min="1" max="30" />
-                                        <label for="current_limit" class="form-label">Current Limit (A)</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Wheel Diameter</th>
-                                <td>
-                                    <div class="form-outline">
-                                        
-                                        <select id="wheel_size" class="form-select">
-                                            <option>16"</option>
-                                            <option>17"</option>
-                                            <option>18"</option>
-                                            <option>19"</option>
-                                            <option>20"</option>
-                                            <option>21"</option>
-                                            <option>22"</option>
-                                            <option>23"</option>
-                                            <option>24"</option>
-                                            <option>25"</option>
-                                            <option>26"</option>
-                                            <option>27"</option>
-                                            <option>28"</option>
-                                            <option>29"</option>
-                                            <option>30"</option>
-                                            <option>700C</option>
-                                        </select>
-                                    
-                                    </div>                                
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Speedmeter Model</th>
-                                <td><select id="speedmeter_model" class="form-select form-select-sm">
-                                        <option>External</option>
-                                        <option>Internal</option>
-                                        <option>Motorphase</option>
-                                    </select></td>
-                            </tr>
-
-                            <tr>
-                                <th>Speedmeter Signals</th>
-                                <td><input type="number" id="speedmeter_signals" class="cfg" min=0 max=63 /></td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" style="border:0;"></th>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <table class="table table-sm table-hover">
-                        <thead>
-                            <tr>
-                                <th style="width:50px;">Assist</th>
-                                <th style="width:50%;">Current (%)</th>
-                                <th style="width:50px;"></th>                                
-                                <th style="width:50%;">Speed (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>
-                                    <div class="d-flex flex-row" style="width: 100%;">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist0_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist0_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row"  style="width: 100%;">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist0_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist0_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist1_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist1_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist1_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist1_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist2_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist2_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist2_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist2_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist3_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist3_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist3_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist3_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist4_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist4_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist4_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist4_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist5_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist5_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist5_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist5_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>6</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist6_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist6_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist6_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist6_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>7</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist7_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist7_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist7_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist7_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>8</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist8_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist8_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist8_speed" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist8_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>9</td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist9_current" type="range" class="form-range"
-                                                oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist9_current_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button title="Reset to last read value" class="btn btn-floating">
-                                        <i class="fas fa-redo"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <div class="range" style="width: 100%;" class="ps-2">
-                                            <input id="assist9_speed" type="range" class="form-range" oninput="setSlideValue(this)" />
-                                        </div>
-                                        <input id="assist9_speed_value" class="form-control ms-2" style="width:45px; border:0px" value="50" />
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                    <canvas class="barchart" id="chart_current" width=600 height=150></canvas>
+                    <div class="d-flex justify-content-end">
+                        <button id="read-bas" class="btn" type="button" disabled=1>Read</button>
+                        <button id="write-bas" class="btn" type="button" disabled=1>Write</button>
+                    </div>
                 </div>
+
+
+                <span class="error-display" id="basic"></span>
+
+                <table id="basic" class="table table-sm table-hover">
+                    <tbody>
+                        <tr>
+                            <th style="width:250px;">Low Battery Protect (V)</th>
+                            <td>
+                                <input type="number" id="low_battery_protect" class="form-control" min="18" max="70" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Current Limit (A)</th>
+                            <td>
+                                <div class="form-outline">
+                                    <input type="number" id="current_limit" class="form-control" min="1" max="30" />
+                                    <label for="current_limit" class="form-label">Current Limit (A)</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Wheel Diameter</th>
+                            <td>
+                                <div class="form-outline">
+                                    <select id="wheel_size" class="form-select">
+                                        <option>16"</option>
+                                        <option>17"</option>
+                                        <option>18"</option>
+                                        <option>19"</option>
+                                        <option>20"</option>
+                                        <option>21"</option>
+                                        <option>22"</option>
+                                        <option>23"</option>
+                                        <option>24"</option>
+                                        <option>25"</option>
+                                        <option>26"</option>
+                                        <option>27"</option>
+                                        <option>28"</option>
+                                        <option>29"</option>
+                                        <option>30"</option>
+                                        <option>700C</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Speedmeter Model</th>
+                            <td>
+                                <select id="speedmeter_model" class="form-select form-select-sm">
+                                    <option>External</option>
+                                    <option>Internal</option>
+                                    <option>Motorphase</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Speedmeter Signals</th>
+                            <td><input type="number" id="speedmeter_signals" class="cfg" min="0" max="63" /></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="border:0;"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:3em;">Assist</th>
+                            <th>Current (%)</th>
+                            <th style="width:3em;">Load value</th>
+                            <th>Speed (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>
+                                <div class="d-flex flex-row" style="width: 100%;">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist0_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist0_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row" style="width: 100%;">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist0_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist0_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist1_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist1_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist1_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist1_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist2_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist2_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist2_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist2_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist3_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist3_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist3_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist3_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist4_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist4_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist4_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist4_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist5_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist5_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist5_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist5_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>6</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist6_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist6_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist6_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist6_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>7</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist7_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist7_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist7_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist7_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>8</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist8_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist8_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist8_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist8_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>9</td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist9_current" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist9_current_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                            <td>
+                                <button title="Reset to last read value" class="btn btn-floating">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-row">
+                                    <div class="range" style="width: 100%;" class="ps-2">
+                                        <input id="assist9_speed" type="range" class="form-range"
+                                            oninput="setSlideValue(this)" />
+                                    </div>
+                                    <input id="assist9_speed_value" class="form-control ms-2"
+                                        style="width:45px; border:0px" value="50" />
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <canvas class="barchart" id="chart_current" width=600 height=150></canvas>
+
 
             </div>
             <div class="tab-pane fade" id="pas-tab-pane" role="tabpanel" aria-labelledby="pas-tab" tabindex="0">
-                <div class="container">
-                    <h2>Pedal Assist</h2>
-                    <span class="error-display" id="pedal"></span>
 
-                    <button id="read-pas" class="btn" type="button" disabled=1>Read</button>
-                    <button id="write-pas" class="btn" type="button" disabled=1>Write</button>
+                <span class="error-display" id="pedal"></span>
 
-                    <table id="pedal">
-                        <tbody>
-                            <tr>
-                                <th>Pedal Type</th>
-                                <td><select id="pedal_type" class="form-select form-select-sm">
-                                        <option>None</option>
-                                        <option>DH-Sensor-12</option>
-                                        <option>BB-Sensor-32</option>
-                                        <option>DoubleSignal-24</option>
-                                    </select></td>
-                            </tr>
-                            <tr>
-                                <th>Designated Assist (0-9)</th>
-                                <td><select id="designated_assist" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Speed Limit (km/h)</th>
-                                <td><input list="by-display" id="speed_limit" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Start Current (%)</th>
-                                <td><input type="number" min=0 max=100 id="start_current" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Slow-Start Mode (1-8)</th>
-                                <td><select id="slow_start_mode" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Startup Degree (Signal No.)</th>
-                                <td><input type="number" id="startup_degree" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Work Mode (pedal/wheel*10)</th>
-                                <td><input list="work-modes" id="work_mode" class="cfg" /></td>
-                            </tr>
-                            <datalist id="work-modes">
-                                <option value="Undetermined" />
-                            </datalist>
-                            <tr>
-                                <th>Time of Stop (x 10 ms)</th>
-                                <td><input type="number" id="time_of_stop" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Current Decay (1-8)</th>
-                                <td><select id="current_decay" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Stop Decay (x 10 ms)</th>
-                                <td><input type="number" id="stop_decay" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Keep Current (%)</th>
-                                <td><input type="number" min=1 max=100 id="keep_current" class="cfg" /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-start">
+                        <h2>Pedal Assist</h2>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button id="read-pas" class="btn" type="button" disabled=1>Read</button>
+                        <button id="write-pas" class="btn" type="button" disabled=1>Write</button>
+                    </div>
                 </div>
+
+                <table id="pedal" class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <th style="width:20em;">Pedal Type</th>
+                            <td>
+                                <select id="pedal_type" class="form-select">
+                                    <option>None</option>
+                                    <option>DH-Sensor-12</option>
+                                    <option>BB-Sensor-32</option>
+                                    <option>DoubleSignal-24</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Designated Assist (0-9)</th>
+                            <td>
+                                <select id="designated_assist" class="form-select" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Speed Limit (km/h)</th>
+                            <td>
+                                <input list="by-display" id="speed_limit" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Start Current (%)</th>
+                            <td>
+                                <input type="number" min="0" max="100" id="start_current" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Slow-Start Mode (1-8)</th>
+                            <td>
+                                <select id="slow_start_mode" class="form-select" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Startup Degree (Signal No.)</th>
+                            <td>
+                                <input type="number" id="startup_degree" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Work Mode (pedal/wheel*10)</th>
+                            <td>
+                                <input list="work-modes" id="work_mode" class="form-control" />
+                                <datalist id="work-modes">
+                                    <option value="Undetermined" />
+                                </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Time of Stop (x 10 ms)</th>
+                            <td>
+                                <input type="number" id="time_of_stop" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Current Decay (1-8)</th>
+                            <td>
+                                <select id="current_decay" class="form-select" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Stop Decay (x 10 ms)</th>
+                            <td>
+                                <input type="number" id="stop_decay" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Keep Current (%)</th>
+                            <td>
+                                <input type="number" min=1 max=100 id="keep_current" class="form-control" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <datalist id="by-display">
                     <option value="Display" />
                 </datalist>
 
             </div>
             <div class="tab-pane fade" id="throttle-tab-pane" role="tabpanel" aria-labelledby="throttle-tab" tabindex="0">
-                <div class="container">
+                
                     <h2>Throttle</h2>
                     <span class="error-display" id="throttle"></span>
                     <div class="read-write">
@@ -569,15 +616,16 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                
             </div>
         </div>
 
         <pre id="serial-messages-container"></pre>
-
-        <div class="creds">By Jonatan Liljedahl - <a href="http://kymatica.com">www.kymatica.com</a>,<br />
-            modded by Jitterer</div>
-        </div>
+        <footer class="navbar-fixed-bottom">
+            <span>By Jonatan Liljedahl - <a href="http://kymatica.com">www.kymatica.com</a>,<br />
+                modded by ML</span>
+        </footer>
+    </main>
 
 
     <script src="js/app.js"></script>
