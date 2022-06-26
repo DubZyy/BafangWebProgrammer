@@ -34,8 +34,8 @@
                     aria-controls="pas-tab-pane" aria-selected="false">Pedal Assist</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="throttle-tab" data-mdb-toggle="tab" data-bs-target="#throttle-tab-pane"
-                    type="button" role="tab" aria-controls="throttle-tab-pane" aria-selected="false">Throttle Handle</a>
+                <a class="nav-link" id="throttle-tab" data-mdb-toggle="tab" href="#throttle-tab-pane" type="button"
+                    role="tab" aria-controls="throttle-tab-pane" aria-selected="false">Throttle Handle</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -56,9 +56,7 @@
                     </div>
                     <hr class="divider-horizontal" />
                     <div>
-                        <label class="form-label" for="save-file">Save File:</label>
-                        <button id="save-file" type="button" class="btn">Download Controller</button>
-
+                        <button id="save-file" type="button" class="btn">Download config file from controller</button>
                     </div>
                 </div>
 
@@ -577,46 +575,64 @@
                 </datalist>
 
             </div>
-            <div class="tab-pane fade" id="throttle-tab-pane" role="tabpanel" aria-labelledby="throttle-tab" tabindex="0">
-                
-                    <h2>Throttle</h2>
-                    <span class="error-display" id="throttle"></span>
-                    <div class="read-write">
-                        <button id="read-thr" class="read" type="button" disabled=1>Read</button>
-                        <button id="write-thr" class="write" type="button" disabled=1>Write</button>
+            <div class="tab-pane fade" id="throttle-tab-pane" role="tabpanel" aria-labelledby="throttle-tab"
+                tabindex="0">
+
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-start">
+                        <h2>Throttle</h2>
+                        <span class="error-display" id="throttle"></span>
                     </div>
-                    <table id="throttle">
-                        <tbody>
-                            <tr>
-                                <th>Start Voltage (x 100 mV)</th>
-                                <td><input type="number" id="start_voltage" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>End Voltage (x 100 mV)</th>
-                                <td><input type="number" id="end_voltage" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Mode</th>
-                                <td><select id="mode" class="cfg">
-                                        <option>Speed</option>
-                                        <option>Current</option>
-                                    </select></td>
-                            </tr>
-                            <tr>
-                                <th>Designated Assist (0-9)</th>
-                                <td><select id="designated_assist" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Speed Limit (km/h)</th>
-                                <td><input list="by-display" id="speed_limit" class="cfg" /></td>
-                            </tr>
-                            <tr>
-                                <th>Start Current (%)</th>
-                                <td><input type="number" min=0 max=100 id="start_current" class="cfg"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                
+                    <div class="d-flex justify-content-end">
+                        <button id="read-thr" class="btn" type="button" disabled=1>Read</button>
+                        <button id="write-thr" class="btn" type="button" disabled=1>Write</button>
+                    </div>
+                </div>
+
+                <table id="throttle" class="table">
+                    <tbody>
+                        <tr>
+                            <th style="width: 15em;">Start Voltage (x 100 mV)</th>
+                            <td>
+                                <input type="number" id="start_voltage" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>End Voltage (x 100 mV)</th>
+                            <td>
+                                <input type="number" id="end_voltage" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Mode</th>
+                            <td>
+                                <select id="mode" class="form-select">
+                                    <option>Speed</option>
+                                    <option>Current</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Designated Assist (0-9)</th>
+                            <td>
+                                <select id="designated_assist" class="form-select" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Speed Limit (km/h)</th>
+                            <td>
+                                <input list="by-display" id="speed_limit" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Start Current (%)</th>
+                            <td>
+                                <input type="number" min=0 max=100 id="start_current" class="form-control">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
 
